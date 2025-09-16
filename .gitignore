@@ -1,0 +1,13 @@
+### IDE ###
+.idea/
+.vscode/
+
+### Python
+.venv
+
+### Temporary files ###
+temp/
+.cache/
+
+### Secrets ###
+.env
