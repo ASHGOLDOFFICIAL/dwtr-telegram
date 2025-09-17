@@ -6,16 +6,16 @@ from uuid import UUID
 from typing import Sequence
 
 from adapters.handlers.error_response_handler import handle_error_response
-from adapters.handlers.utils.audio_plays import make_starring, make_written_by
-from adapters.handlers.utils.markdown import HORIZONTAL_RULE, bold, h1, h2, \
-    italic, \
-    link
+from adapters.handlers.utils.audio_plays import make_released, make_starring, \
+    make_written_by
+from adapters.handlers.utils.markdown import HORIZONTAL_RULE, bold, h1, h2, link
 from api.audio_play_service import AudioPlayService
 from api.tokens import TokenStore
 from logics.bot import Bot
 from logics.logic import Logic
 from logics.message import BotMessage
-from api.model.audio_play import AudioPlay, AudioPlayLocation, CastMember
+from api.model.audio_play import AudioPlay, AudioPlayLocation, CastMember, \
+    EpisodeType
 from api.model.error_response import ErrorResponse
 from api.model.external_resource import ExternalResource
 
@@ -32,7 +32,8 @@ def _make_series_info(audio_play: AudioPlay) -> str | None:
     :rtype: str | None line if series is given, otherwise None. 
     """
     els = [audio_play.series_season, audio_play.series_number]
-    number = ".".join(str(x) for x in els if x is not None)
+    separator = "." if audio_play.episode_type == EpisodeType.REGULAR else "SP"
+    number = separator.join(str(x) for x in els if x is not None)
     return " ".join((audio_play.series.name, number))
 
 
@@ -82,9 +83,7 @@ def _make_card_message(audio_play: AudioPlay) -> BotMessage:
     series_info = _make_series_info(audio_play)
     written_by = make_written_by(audio_play.writers)
     starring = make_starring(audio_play.cast)
-    released = italic(
-        f"Released: {audio_play.release_date.strftime("%B %d, %Y")}"
-    )
+    released = make_released(audio_play.release_date)
     card_lines = (
         h1(audio_play.title),
         "",

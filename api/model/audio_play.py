@@ -8,6 +8,12 @@ from uuid import UUID
 from api.model.external_resource import ExternalResource
 from api.model.language import Language
 from api.model.person import Person
+from api.model.release_date import ReleaseDate
+
+
+class EpisodeType(enum.StrEnum):
+    REGULAR = "regular"
+    SPECIAL = "special"
 
 
 class CastMember(BaseModel):
@@ -69,18 +75,20 @@ class AudioPlay(BaseModel):
     :param series: series this audio play belongs to.
     :param series_season: season of this audio play.
     :param series_number: number in season/series.
+    :param episode_type: type of the audio play entry in relation to series.
     :param cover_uri: URI to cover.
     :param external_resources: links to external resources.
     """
     id: UUID
     title: str
     synopsis: str
-    release_date: date
+    release_date: ReleaseDate
     writers: list[Person]
     cast: list[CastMember]
     series: AudioPlaySeries | None
     series_season: int | None
     series_number: int | None
+    episode_type: EpisodeType | None
     cover_uri: str | None
     external_resources: list[ExternalResource]
 

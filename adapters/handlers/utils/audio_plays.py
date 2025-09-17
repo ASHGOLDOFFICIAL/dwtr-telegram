@@ -3,6 +3,7 @@ from typing import Sequence
 from adapters.handlers.utils.markdown import italic, link
 from api.model.audio_play import CastMember
 from api.model.person import Person
+from api.model.release_date import DateAccuracy, ReleaseDate
 
 
 def make_written_by(writers: Sequence[Person]) -> str | None:
@@ -33,4 +34,28 @@ def make_starring(cast: Sequence[CastMember]) -> str | None:
     first_part = ", ".join(names[:-1])
     return "Starring " + " & ".join(
         italic(x) for x in (first_part, names[-1]) if x
+    )
+
+
+def make_released(rd: ReleaseDate) -> str:
+    """
+    Makes "Released ..." line based on date accuracy.
+    :param rd: release date of an audio play.
+    :return: line.
+    """
+    pattern: str | None = None
+    match rd.accuracy:
+        case DateAccuracy.FULL:
+            pattern = "%B %d, %Y"
+        case DateAccuracy.DAY:
+            pattern = "%B, %Y"
+        case DateAccuracy.MONTH:
+            pattern = "%Y"
+        case DateAccuracy.YEAR:
+            pattern = None
+
+    if pattern is None:
+        return italic(f"Released: Unknown")
+    return italic(
+        f"Released: {rd.date.strftime(pattern)}"
     )
