@@ -42,4 +42,4 @@ def h2(s: str) -> str:
     """
     return "## " + s
 
-HORIZONTAL_RULE: str = "***"
+HORIZONTAL_RULE: str = "\n***\n"

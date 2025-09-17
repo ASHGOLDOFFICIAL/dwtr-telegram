@@ -11,7 +11,7 @@ from api.model.audio_play import AudioPlay, SearchAudioPlaysResponse
 from api.model.error_response import ErrorResponse
 
 _NOT_FOUND = BotMessage(
-    text="Nothing is found. Try something else."
+    text="😇 Nothing is found. Try something else."
 )
 
 
