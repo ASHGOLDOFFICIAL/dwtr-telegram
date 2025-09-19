@@ -13,6 +13,9 @@ from api.model.error_response import ErrorResponse
 _NOT_FOUND = BotMessage(
     text="😇 Nothing is found. Try something else."
 )
+_INVALID_ARGUMENT = BotMessage(
+    text="😁 Query was expected as parameter."
+)
 
 
 def _make_search_entry(num: int, audio_play: AudioPlay) -> str:
@@ -69,6 +72,12 @@ class SearchAudioPlaysHandler(Logic):
             message: BotMessage,
             bot: Bot
     ) -> None:
+        if not message.text.strip():
+            return await bot.send_message(
+                message=_INVALID_ARGUMENT,
+                user_id=user_id
+            )
+        
         match self._aps.search(message.text, 5):
             case SearchAudioPlaysResponse() as response:
                 message = _make_search_message(response)

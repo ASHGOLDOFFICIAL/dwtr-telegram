@@ -47,6 +47,9 @@ class AudioPlayServiceImpl(AudioPlayService):
             query: str,
             limit: int | None = None
     ) -> SearchAudioPlaysResponse | ErrorResponse | None:
+        if not query:
+            return None
+        
         params = self._encode_params({
             "query": query,
             "limit": limit

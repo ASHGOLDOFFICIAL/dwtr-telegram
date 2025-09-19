@@ -105,7 +105,7 @@ class TelegramBot(logics.bot.Bot):
             text = update.callback_query.data
             chat_id = update.callback_query.message.chat.id
             logging.info(f"[{chat_id}] callback: {update.callback_query}")
-        elif update.message:
+        elif update.message and update.message.text:
             text = standardize(update.message.text)
             chat_id = update.message.chat_id
             logging.info(f"[{chat_id}] text: {update.message}")
