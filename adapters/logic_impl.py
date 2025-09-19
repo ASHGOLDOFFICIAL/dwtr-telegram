@@ -3,6 +3,7 @@ import logging
 from adapters.handlers.get_audio_play import GetAudioPlayHandler
 from adapters.handlers.login_handler import LoginCommandHandler
 from adapters.handlers.search_audio_plays import SearchAudioPlaysHandler
+from adapters.handlers.start_handler import StartCommandHandler
 from adapters.handlers.token_handler import TokenCommandHandler
 from adapters.handlers.unknown_handler import UnknownCommandHandler
 from api.authentication_service import AuthenticationService
@@ -32,6 +33,7 @@ class LogicImpl(Logic):
         :param aps: audio play service.
         :param ts: place to store tokens.
         """
+        self._start_handler = StartCommandHandler()
         self._login_handler = LoginCommandHandler(aus, ts)
         self._token_handler = TokenCommandHandler(ts)
         self._search_handler = SearchAudioPlaysHandler(aps)
@@ -78,6 +80,8 @@ class LogicImpl(Logic):
                 return self._search_handler
             case "/get":
                 return self._get_handler
+            case '/start':
+                return self._start_handler
             case _:
                 return self._unknown_handler
     
