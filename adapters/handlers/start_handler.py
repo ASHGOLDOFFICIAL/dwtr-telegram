@@ -11,12 +11,12 @@ _START = BotMessage(
             "Helps you search audio plays, just type:\n" +
             code("/search whatever you want to find"),
 
-            "Audio plays are being searched by title and synopsis. "
+            "Audio plays are being searched by their title and synopsis. "
             "So if you want to quickly find an audio play, just type "
             "its title, but please be aware that only a small fraction "
             "of them has been added. More will come.",
 
-            "Right now we only store original titles and synopsis. Localized "
+            "Right now we only store original titles and synopses. Localized "
             "versions will be added some time later.",
 
             "So type to start searching:\n" + code("/search doctor who")
