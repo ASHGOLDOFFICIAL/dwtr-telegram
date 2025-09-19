@@ -25,6 +25,14 @@ def link(text: str, link_: str) -> str:
     """
     return f"[{text}]({link_})"
 
+def code(s: str) -> str:
+    """
+    Makes code line
+    :param s: string to make code line from.
+    :return: code line.
+    """
+    return "`" + s + "`"
+
 
 def h1(s: str) -> str:
     """
